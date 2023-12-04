@@ -29,10 +29,10 @@ onValue(endorsementInDB, function(snapshot){
     let itemArray = Object.entries(snapshot.val())
 
     for (let i = 0; i < itemArray.length; i++) {
-      let currentItem = itemArray[i]
-      let fromText = currentItem[0][1]
-      let toText = currentItem[1][1]
-      let messageText = currentItem[2][1]
+      let currentItem = itemArray[i][1]
+      let fromText = currentItem.from
+      let toText = currentItem.to
+      let messageText = currentItem.message
       appendElement(fromText, toText, messageText)
     }
   } else {
@@ -45,9 +45,9 @@ function appendElement(fromWho, toWho, message) {
   let h3El = document.createElement("h3")
   let h4El = document.createElement("h4")
   let pEl = document.createElement("p")
-  h3El.textContent = toWho
+  h3El.textContent = `To ${toWho}`
   pEl.textContent = message
-  h4El.textContent = fromWho
+  h4El.textContent = `From ${fromWho}`
   liEl.appendChild(h3El)
   liEl.appendChild(pEl)
   liEl.appendChild(h4El)
