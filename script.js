@@ -21,18 +21,26 @@ submitBtn.addEventListener("click", () => getInputFromUser())
 function getInputFromUser() {
   let userInput = {from: inputFromEl.value, to: inputToEl.value, message: inputMessageEl.value}
   push(endorsementInDB, userInput)
-  appendEndorsement(userInput)
 }
 
-function appendEndorsement(message) {
-  let arrayUserInput = Object.entries(message)
-  let fromText = arrayUserInput[0][1]
-  let toText = arrayUserInput[1][1]
-  let messageText = arrayUserInput[2][1]
-  createElement(fromText, toText, messageText)
-}
+onValue(endorsementInDB, function(snapshot){
+  if (snapshot.exists()) {
 
-function createElement(fromWho, toWho, message) {
+    let itemArray = Object.entries(snapshot.val())
+
+    for (let i = 0; i < itemArray.length; i++) {
+      let currentItem = itemArray[i]
+      let fromText = currentItem[0][1]
+      let toText = currentItem[1][1]
+      let messageText = currentItem[2][1]
+      appendElement(fromText, toText, messageText)
+    }
+  } else {
+    ulEl.textContent = "no item yet"
+  }
+})
+
+function appendElement(fromWho, toWho, message) {
   let liEl = document.createElement("li")
   let h3El = document.createElement("h3")
   let h4El = document.createElement("h4")
