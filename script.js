@@ -24,12 +24,16 @@ function getInputFromUser() {
 }
 
 onValue(endorsementInDB, function(snapshot){
+
+  clearUlEl()
+
   if (snapshot.exists()) {
 
     let itemArray = Object.entries(snapshot.val())
+    let itemArrayNewestFirst = itemArray.reverse()
 
     for (let i = 0; i < itemArray.length; i++) {
-      let currentItem = itemArray[i][1]
+      let currentItem = itemArrayNewestFirst[i][1]
       let fromText = currentItem.from
       let toText = currentItem.to
       let messageText = currentItem.message
@@ -52,4 +56,8 @@ function appendElement(fromWho, toWho, message) {
   liEl.appendChild(pEl)
   liEl.appendChild(h4El)
   ulEl.appendChild(liEl)
+}
+
+function clearUlEl() {
+  ulEl.innerHTML = ""
 }
