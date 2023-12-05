@@ -33,6 +33,14 @@ h1 {
     line-height: normal;
 }
 
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+}
+
 .input-message {
     width: 100%;
     height: 120px;

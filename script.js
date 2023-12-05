@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import {initializeApp} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
+import {getDatabase, ref, push, onValue, remove} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSetting = {
   databaseURL: "https://realtime-database-8e9e1-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -9,21 +9,22 @@ const app = initializeApp(appSetting)
 const database = getDatabase(app)
 const endorsementInDB = ref(database, "endorsement")
 
-
-const inputMessageEl = document.querySelector(".input-message")
-const inputFromEl = document.querySelector(".input-from")
-const inputToEl  = document.querySelector(".input-to")
-const submitBtn = document.querySelector(".submit-btn")
 const ulEl = document.querySelector(".endorsement-container")
+const formEl = document.querySelector('.message-form')
 
-submitBtn.addEventListener("click", () => getInputFromUser())
+formEl.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const formData = new FormData(formEl)
+  const data = {
+    from: formData.get('from'),
+    message: formData.get('message'),
+    to: formData.get('to')
+  }
+  push(endorsementInDB, data)
+  formEl.reset();
+})
 
-function getInputFromUser() {
-  let userInput = {from: inputFromEl.value, to: inputToEl.value, message: inputMessageEl.value}
-  push(endorsementInDB, userInput)
-}
-
-onValue(endorsementInDB, function(snapshot){
+onValue(endorsementInDB, function (snapshot) {
 
   clearUlEl()
 
