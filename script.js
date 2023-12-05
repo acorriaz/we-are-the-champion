@@ -11,14 +11,18 @@ const endorsementInDB = ref(database, "endorsement")
 
 const ulEl = document.querySelector(".endorsement-container")
 const formEl = document.querySelector('.message-form')
+const sortBtn = document.querySelector('.sort-btn')
 
+sortBtn.addEventListener('click', () => {
+  console.log("clicked")
+  ulEl.classList.toggle('reverse-endorsement')
+  sortBtn.textContent === 'Newest First' ? sortBtn.textContent = 'Oldest First' : sortBtn.textContent = 'Newest First'
+})
 formEl.addEventListener('submit', (e) => {
   e.preventDefault()
   const formData = new FormData(formEl)
   const data = {
-    from: formData.get('from'),
-    message: formData.get('message'),
-    to: formData.get('to')
+    from: formData.get('from'), message: formData.get('message'), to: formData.get('to')
   }
   push(endorsementInDB, data)
   formEl.reset();
@@ -31,7 +35,7 @@ onValue(endorsementInDB, function (snapshot) {
   if (snapshot.exists()) {
 
     let itemArray = Object.entries(snapshot.val())
-    let itemArrayNewestFirst = itemArray.reverse()
+    let itemArrayNewestFirst = itemArray
 
     for (let i = 0; i < itemArray.length; i++) {
       let currentItem = itemArrayNewestFirst[i][1]
@@ -62,3 +66,4 @@ function appendElement(fromWho, toWho, message) {
 function clearUlEl() {
   ulEl.innerHTML = ""
 }
+

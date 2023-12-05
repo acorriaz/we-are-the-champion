@@ -96,10 +96,37 @@ h2 {
     font-weight: 700;
 }
 
+.secondary-header-container {
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.secondary-header-container button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 4px 12px;
+    font-family: var(--josefin);
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
 ul {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 12px;
+}
+
+.reverse-endorsement {
+    flex-direction: column;
+}
+
+.display {
+    display: block;
 }
 
 li {
